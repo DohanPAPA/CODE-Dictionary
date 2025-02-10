@@ -116,5 +116,10 @@ namespace Code_Dictionary_C_
             //target_.Run();
         }
 
-    }
+        private void HowToRunAnimals(object obj)
+        {
+            Ianimal Target = obj as Ianimal;
+
+            Target.Run();
+        }
 }
