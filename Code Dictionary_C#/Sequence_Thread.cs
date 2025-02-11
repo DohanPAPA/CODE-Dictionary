@@ -81,20 +81,20 @@ namespace Code_Dictionary_C_
 
     internal class Sequence_Thread
     {
-        // 시퀀스 타입 선택
+        // 시퀀스 타입(이름) 선택
         public const int SEQ_Type = (int)eSEQ_Type.SEQ_Motion;
 
 
         public Sequence_Thread()
         {
             // 시작할 스텝 지정
-            Check_TimeOut.m_SEQ_Number[(int)eSEQ_Type.SEQ_Motion] = (int)SEQ_Step.SEQ_Step_1;
+            Check_TimeOut.m_SEQ_Number[SEQ_Type] = (int)SEQ_Step.SEQ_Step_1;
         }
 
         // 시퀀스 동작 함수
         public void SEQ_Run_Step_Control()
         {
-            switch (Check_TimeOut.m_SEQ_Number[(int)eSEQ_Type.SEQ_Motion])
+            switch (Check_TimeOut.m_SEQ_Number[SEQ_Type])
             {
                 case 0:
                     { Method_1(); }
