@@ -191,5 +191,24 @@ namespace Code_Dictionary_C_
                 }
             }
         }
+
+        public void Method_5()
+        {
+            // 실행할 조건에 맞는지 확인 후 실행
+            if (true)
+            {
+                // 다음 시퀀스 구동(시퀀스 번호,시퀀스 스텝의 번호,타임아웃 시간)
+                Check_TimeOut.SetNextSeq(SEQ_Type, (int)SEQ_Step.SEQ_Step_5, Check_TimeOut.SEQ_TIMEOUT_CHECK_20_SEC);
+            }
+            else
+            {
+                // 조건에 부합하지 않으면 지정된 시간만큼 체크했다가 타임아웃으로 빠짐
+                if (Check_TimeOut.CheckTime(SEQ_Type))
+                {
+                    // 시퀀스 종료
+                    Check_TimeOut.SetNextSeq(SEQ_Type, (int)SEQ_Step.SEQ_END_Step, Check_TimeOut.SEQ_TIMEOUT_CHECK_20_SEC);
+                }
+            }
+        }
     }
 }
