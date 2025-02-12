@@ -103,6 +103,9 @@ namespace Code_Dictionary_C_
             HowToEatAnimals(person);
             HowToEatAnimals(lion);
             HowToEatAnimals(cat);
+            HowToRunAnimals(person);
+            HowToRunAnimals(lion);
+            HowToRunAnimals(cat);
 
         }
 
