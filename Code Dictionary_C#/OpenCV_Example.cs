@@ -54,6 +54,7 @@ namespace Code_Dictionary_C_
             capture.Set(VideoCaptureProperties.FrameWidth, 640);
             capture.Set(VideoCaptureProperties.FrameHeight, 480);
 
+
             await Task.Delay(8);
             bRet = true;
             while (bRet)
@@ -75,7 +76,6 @@ namespace Code_Dictionary_C_
                     //    {
                     //    }
                     //}
-
                 }
             }
             capture.Release();
@@ -416,6 +416,7 @@ namespace Code_Dictionary_C_
             // (입력 이미지, 검출된 윤곽선, 계층구조, 검색방법, 근사 방법 , 오프셋)
             // 오프셋 : 반환된 윤곽점들의 좌푯값에 이동할 값을 설정한다. 관심 영역에서 윤곽선을 검출하거나 다른 이미지에 표시하고자 할 때 주로 활용
             Cv2.FindContours(image, out contours, out hierarchy, RetrievalModes.External, ContourApproximationModes.ApproxNone, null); // 윤곽선 검출
+
 
             for (int i = 0; i < contours.Length; i++)
             {

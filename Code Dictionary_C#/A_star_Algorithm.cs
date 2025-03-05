@@ -18,14 +18,33 @@ namespace Code_Dictionary_C_
 
     class A_star_Algorithm
     {
+        public void Start()
+        {
+            Tile_node Start_Point = new Tile_node(0, 0);
+            Tile_node End_Point = new Tile_node(4, 4);
+
+            List<Tile_node> path = FindPath(Start_Point, End_Point);
+
+            if (path != null)
+            {
+                Console.WriteLine("최단 경로:");
+                foreach (var node in path)
+                    Console.WriteLine($"({node.X}, {node.Y})");
+            }
+            else
+            {
+                Console.WriteLine("경로를 찾을 수 없습니다.");
+            }
+        }
+
         static int[,] map =
         {
             // 0 : 이동 가능
             // 1 : 이동 불가
             { 0, 0, 0, 0, 1 },
-            { 1, 1, 0, 1, 1 },
+            { 1, 0, 0, 1, 1 },
             { 0, 0, 0, 0, 0 },
-            { 0, 1, 1, 1, 0 },
+            { 0, 1, 1, 1, 1 },
             { 0, 0, 0, 0, 0 }
         };
 
@@ -33,8 +52,11 @@ namespace Code_Dictionary_C_
         // 현재위치에서 목표위치까지의 예상 비용을 계산하는 함수
         private int Heuristic(Tile_node current_Tile, Tile_node end_Tile)
         {
+            int dx = Math.Abs(current_Tile.X - end_Tile.X);
+            int dy = Math.Abs(current_Tile.Y - end_Tile.Y);
+
             // 절대값으로 계산
-            return Math.Abs(current_Tile.X - end_Tile.X) + Math.Abs(current_Tile.Y - end_Tile.Y);
+            return dx + dy;
         }
 
         public List<Tile_node> FindPath(Tile_node Start_Tile, Tile_node End_Tile)
@@ -64,7 +86,8 @@ namespace Code_Dictionary_C_
 
 
                 // 4방향으로 다음 부분을 총 4번 호출
-                foreach (var neighbor in GetNeighbors(current))
+                // allowDiagonal : 대각선이 있는지 없는지 설정할때 사용
+                foreach (var neighbor in GetNeighbors(current, allowDiagonal: false))
                 {
                     // 1. 이미 방문한 타일이 있는 경우 무시
                     if (closedList.Contains(neighbor)) continue;
@@ -72,6 +95,9 @@ namespace Code_Dictionary_C_
                     // 2. 현재 타일을 통해 이웃 타일로 가는 비용 G 계산\
                     // 상하좌우 이동비용 1임 -> 가중치가 없는 경우
                     int tentativeG = current.G_cost + 1;
+                    // 가중치가 있는 경우 상하좌우 10 / 대각선 14
+                    //int moveCost = (neighbor.X != current.X && neighbor.Y != current.Y) ? 10 : 14;
+                    //int tentativeG = current.G_cost + moveCost;
 
                     // 3. 새로운 경로가 기존 경보로다 좋은 경우 갱신
                     if (!openList.Contains(neighbor) ||
@@ -115,11 +141,16 @@ namespace Code_Dictionary_C_
             return path;
         }
 
-        private List<Tile_node> GetNeighbors(Tile_node currentTile)
+        private List<Tile_node> GetNeighbors(Tile_node currentTile, bool allowDiagonal = false)
         {
             List<Tile_node> neighbors = new List<Tile_node>();
+            // 상하좌우 4방향만
             int[] direction_X = { 0, 0, -1, 1 }; // X축 : 상(0) , 하(0) , 좌(-1) , 우(1)
             int[] direction_Y = { -1, 1, 0, 0 }; // Y축 : 상(-1), 하(1) , 좌(0)  , 우(0)
+            //// 상하좌우 + 대각선 이동을 위한 방향 배열
+            //int[] direction_X = { 0, 0, -1, 1, -1, -1, 1, 1 };
+            //int[] direction_Y = { -1, 1, 0, 0, -1, 1, -1, 1 };
+            //int directionCount = allowDiagonal ? 8 : 4; // 8방향(대각선 포함) 또는 4방향(기본)
 
             for (int i = 0; i < 4; i++)
             {
