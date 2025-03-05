@@ -135,7 +135,7 @@ namespace Code_Dictionary_C_
             while (currentTile != null)
             {
                 path.Add(currentTile);            // 현재 노드를 리스트에 추가
-                currentTile = currentTile.Parent; // 부모노드로 이동
+                currentTile = currentTile.Parent; // 부모 노드로 이동
             }
 
             // 2. 리스트를 뒤집어서 올바른 순서(출발 → 도착)로 변경
@@ -164,7 +164,7 @@ namespace Code_Dictionary_C_
 
                 // 새로운 좌표가 유효한지 검사 (맵 범위 내 & 장애물이 없는 경우)
                 if (newX >= 0 && newX < map.GetLength(0) &&     // 새로운 X좌표가 0보다 크고 맵의 행 개수가 새로운 X좌표보다 큰지 확인
-                    newY >= 0 && newY < map.GetLength(1) &&     // 새로운 Y좌표가 0보다 크고 맵의 행 개수가 새로운 Y좌표보다 큰지 확인
+                    newY >= 0 && newY < map.GetLength(1) &&     // 새로운 Y좌표가 0보다 크고 맵의 열 개수가 새로운 Y좌표보다 큰지 확인
                     map[newX, newY] == 0)                       // map[newX,newY] == 0 : 0이면 이동 가능, 1이면 이동 불가(벽) // ture,false 형식일때는 수정 필요
                     neighbors.Add(new Tile_node(newX, newY));   // 유효한 경우 이웃 리스트에 추가
             }
