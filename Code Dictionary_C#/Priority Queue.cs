@@ -37,7 +37,7 @@ namespace Code_Dictionary_C_
             // 현재 리스트 크기 확인 탐색
             int now_index = Heap.Count() - 1;
 
-            // Min값으로 정렬
+            // 오름차순으로 정렬
             while (now_index > 0)
             {
                 //현재 넣은 데이터 차일드 검색
@@ -46,7 +46,8 @@ namespace Code_Dictionary_C_
                 //부모 인덱스 저장
                 int parant = (child - 1) / 2;
 
-                //값 비교후 더 낮으면 스왑
+                // 값 비교후 더 낮으면 스왑
+                // 내림차순으로 정렬 시 부등호 반대로 
                 if (Heap[child] < Heap[parant])
                 {
                     Swap(parant, child);
@@ -122,7 +123,6 @@ namespace Code_Dictionary_C_
             {
                 throw new ApplicationException("자료가 없습니다");
             }
-
 
             int peekData = Heap[0];
 

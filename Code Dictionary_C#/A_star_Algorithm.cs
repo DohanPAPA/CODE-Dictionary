@@ -50,6 +50,7 @@ namespace Code_Dictionary_C_
 
         // 휴리스틱값 계산
         // 현재위치에서 목표위치까지의 예상 비용을 계산하는 함수
+        // 맨하탄 거리를 계산하는 휴리스틱 함수
         private int Heuristic(Tile_node current_Tile, Tile_node end_Tile)
         {
             int dx = Math.Abs(current_Tile.X - end_Tile.X);
@@ -63,6 +64,8 @@ namespace Code_Dictionary_C_
         {
             // 우선순위 큐를 사용 또는 리스트를 사용하여 오픈 리스트를 관리함
             List<Tile_node> openList = new List<Tile_node> { Start_Tile }; // 지나갈수 있는 길
+            //// .NET 7 이상일때 사용할 수 있는 SortedSet 사용하면더 수월함
+            //SortedSet<Tile_node> openList_ = new SortedSet<Tile_node>();
             HashSet<Tile_node> closedList = new HashSet<Tile_node>();      // 지나갈수 없는 길
 
 
@@ -72,6 +75,7 @@ namespace Code_Dictionary_C_
                 // 우선순위 큐를 사용하지 않고 리스트를 사용했을때
                 // F 값이 가장 낮은 값을 선택
                 Tile_node current = openList.OrderBy(tile => tile.F_cost).First();
+                //openList_.First();
                 //if (closedList.Contains(current))
                 //    continue;
 
