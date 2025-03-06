@@ -18,8 +18,22 @@ namespace Code_Dictionary_C_
 
     class A_star_Algorithm
     {
-        public void Start()
+        // SLAM에서 실시간으로 맵핑되는 데이터를 2D 배열로 변환해서 전달됨
+        static int[,] gridMap =
         {
+            // 0 : 이동 가능
+            // 1 : 이동 불가
+            { 0, 0, 0, 0, 1 },
+            { 1, 0, 0, 1, 1 },
+            { 0, 0, 0, 0, 0 },
+            { 0, 1, 1, 1, 1 },
+            { 0, 0, 0, 0, 0 }
+        };
+
+        public void Start(int[,] SLAM_Map)
+        {
+            //gridMap = SLAM_Map;
+
             Tile_node Start_Point = new Tile_node(0, 0);
             Tile_node End_Point = new Tile_node(4, 4);
 
@@ -36,17 +50,6 @@ namespace Code_Dictionary_C_
                 Console.WriteLine("경로를 찾을 수 없습니다.");
             }
         }
-
-        static int[,] map =
-        {
-            // 0 : 이동 가능
-            // 1 : 이동 불가
-            { 0, 0, 0, 0, 1 },
-            { 1, 0, 0, 1, 1 },
-            { 0, 0, 0, 0, 0 },
-            { 0, 1, 1, 1, 1 },
-            { 0, 0, 0, 0, 0 }
-        };
 
         // 휴리스틱값 계산
         // 현재위치에서 목표위치까지의 예상 비용을 계산하는 함수
@@ -163,14 +166,16 @@ namespace Code_Dictionary_C_
 
 
                 // 새로운 좌표가 유효한지 검사 (맵 범위 내 & 장애물이 없는 경우)
-                if (newX >= 0 && newX < map.GetLength(0) &&     // 새로운 X좌표가 0보다 크고 맵의 행 개수가 새로운 X좌표보다 큰지 확인
-                    newY >= 0 && newY < map.GetLength(1) &&     // 새로운 Y좌표가 0보다 크고 맵의 열 개수가 새로운 Y좌표보다 큰지 확인
-                    map[newX, newY] == 0)                       // map[newX,newY] == 0 : 0이면 이동 가능, 1이면 이동 불가(벽) // ture,false 형식일때는 수정 필요
+                if (newX >= 0 && newX < gridMap.GetLength(0) &&     // 새로운 X좌표가 0보다 크고 맵의 행 개수가 새로운 X좌표보다 큰지 확인
+                    newY >= 0 && newY < gridMap.GetLength(1) &&     // 새로운 Y좌표가 0보다 크고 맵의 열 개수가 새로운 Y좌표보다 큰지 확인
+                    gridMap[newX, newY] == 0)                       // map[newX,newY] == 0 : 0이면 이동 가능, 1이면 이동 불가(벽) // ture,false 형식일때는 수정 필요
                     neighbors.Add(new Tile_node(newX, newY));   // 유효한 경우 이웃 리스트에 추가
             }
 
             return neighbors;
         }
+
+
 
     }
 
